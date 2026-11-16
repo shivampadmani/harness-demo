@@ -27,7 +27,7 @@ button:hover{border-color:#64748b}button:disabled{opacity:.5;cursor:default}
 .bar{height:5px;background:#E2E8F0;border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;width:0;transition:width .6s,background .6s}
 .grid{display:grid;grid-template-columns:55fr 45fr;gap:12px}.grid>.card{margin:0}
 @media(max-width:900px){.grid{grid-template-columns:1fr}.grid>.card{margin-bottom:12px}}
-.sv{overflow-x:auto}svg{display:block;width:100%;max-height:560px}
+#sw{position:relative}.sv{overflow-x:auto}svg{display:block;width:100%;max-height:560px}
 .edge{fill:none;stroke:#CBD5E1;stroke-width:1.6}
 .edge.on,.edge.fail,.edge.retry,.edge.ok,.edge.hitl{stroke-width:2.8;stroke-dasharray:7 6;animation:dash .5s linear infinite}
 .edge.on{stroke:#F59E0B}.edge.fail{stroke:#EF4444}.edge.retry{stroke:#F97316}.edge.ok{stroke:#22C55E}.edge.hitl{stroke:#D946EF}
@@ -46,7 +46,7 @@ button:hover{border-color:#64748b}button:disabled{opacity:.5;cursor:default}
 #gate{display:none;margin-top:8px;border:1px solid #D946EF;background:rgba(217,70,239,.1);border-radius:10px;padding:10px}
 #gate.show{display:block}#gate code{font-family:var(--m);color:#a21caf}
 .ap{background:#22C55E;border-color:#22C55E;color:#04210f;font-weight:700}.rj{background:#EF4444;border-color:#EF4444;color:#fff}
-#pop{display:none;position:absolute;top:44px;right:12px;max-width:340px;z-index:5;background:#F8FAFC;border:1px solid #8B5CF6;border-radius:10px;padding:10px;font-size:.9em;cursor:pointer}
+#pop{display:none;position:absolute;max-width:300px;width:max-content;z-index:5;background:#F8FAFC;border:1px solid #8B5CF6;border-radius:10px;padding:10px;font-size:.9em;cursor:pointer}
 #term{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;font:12.5px/1.55 var(--m);padding:10px;height:470px;overflow:auto}
 .ll{margin-bottom:3px;word-break:break-word}.ts{color:#94a3b8}.e{color:#b91c1c}.w{color:#c2410c}.o{color:#15803d}
 details{display:inline-block;vertical-align:top;margin-left:6px}summary{cursor:pointer;color:#64748b}
@@ -64,7 +64,7 @@ h2{font-size:1.2em;margin:6px 0 10px}.top h2{margin:10px 0}
 .lc{text-align:left;display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:14px;min-height:120px;box-shadow:0 1px 3px rgba(15,23,42,.06)}
 .lc:hover{border-color:#8B5CF6;box-shadow:0 4px 14px rgba(139,92,246,.18)}.lc small{color:#8B5CF6;font-weight:600}.lc b{font-size:1.15em}.lc span{color:#64748b}
 .top button,.k{min-height:40px}
-@media(max-width:600px){body{padding:8px}#kpis{grid-template-columns:1fr 1fr;gap:8px}.k b{font-size:1.15em}#term{height:320px}.pill{font-size:.78em}#pop{position:static;max-width:none;margin-top:8px}.bar-row button{flex:1 1 auto}}
+@media(max-width:600px){body{padding:8px}#kpis{grid-template-columns:1fr 1fr;gap:8px}.k b{font-size:1.15em}#term{height:320px}.pill{font-size:.78em}#pop{max-width:85%}.bar-row button{flex:1 1 auto}}
 #hero{text-align:center;padding:6px 0 4px}
 #logo{display:block;margin:0 auto 12px;width:min(320px,80%);aspect-ratio:3/1;object-fit:contain}
 #logo.miss{border:1.5px dashed #CBD5E1;border-radius:10px;color:#94a3b8;font-size:.85em;text-align:center;line-height:6em;background:#fff}
@@ -84,14 +84,14 @@ h2{font-size:1.2em;margin:6px 0 10px}.top h2{margin:10px 0}
 <div id="lab" hidden>
 <div class="card top"><button id="back">← All levels</button><h2 id="ltitle"></h2><div class="bar-row"><button class="pri" id="runb">▶ Run Simulation</button><button id="rst">⟲ Reset / Clear Trace</button></div></div>
 <div class="grid">
-<section class="card" id="cv"><h4>Architecture canvas — click any node to inspect it</h4><div class="sv"><svg id="svg" viewBox="0 0 900 400"></svg></div>
+<section class="card" id="cv"><h4>Architecture canvas — click any node to inspect it</h4><div id="sw"><div class="sv"><svg id="svg" viewBox="0 0 900 400"></svg></div><div id="pop"></div></div>
 <div id="kpis">
 <div class="card k"><small>Data accuracy</small><b id="k-acc">28%</b><div class="bar"><i id="k-accb"></i></div></div>
 <div class="card k"><small>Context health</small><b id="k-ctx" style="font-size:1.05em"></b><div class="bar"><i id="k-ctxb"></i></div></div>
 <div class="card k"><small>Latency and est. cost</small><b><span id="k-lat">0.0s</span> · <span id="k-cost">₹0.00</span></b></div>
 </div>
 <div id="gate"><b style="color:#a21caf">⏸ Human approval required</b><div style="margin:4px 0 8px">The agent wants to run <code>send_retention_campaign(discount_budget="₹12,00,000")</code>.</div><div class="bar-row"><button class="ap" id="gok">Approve Budget &amp; Execute</button><button class="rj" id="gno">Reject</button></div></div>
-<div id="pop"></div></section>
+</section>
 <section class="card"><h4>Live execution trace</h4><div id="term"></div></section>
 </div>
 <section class="card" style="margin-top:12px"><div class="bar-row" style="justify-content:space-between"><h4 style="margin:0">Final agent output</h4><button id="cmp">Compare Side-by-Side with Level 1: OFF</button></div>
@@ -131,7 +131,7 @@ sn:['Deterministic Unit-Test Sensor','Harness rule: assert total_rows == process
 hg:['HITL Governance Gate','Harness rule: any side-effecting call (send_retention_campaign) blocks until a human approves.'],
 out:['Final Output','Output schema: {churn_pct, revenue_lost_inr, campaign_status}']}[id]);
 let S={lv:0,tg:[...PRE[0]],pres:true,cmp:false,run:0,running:false,paused:false,out:[],l1:null},simT=0,tk=0,ctx=6,t0=0,curDt=0,gateRes=null,acc=28;
-const K=()=>.55*(S.pres?2:1),cfg=()=>Object.fromEntries(KEYS.map((k,i)=>[k,!!S.tg[i]])),custom=()=>!PRE[S.lv].every((v,i)=>v==S.tg[i]);
+let cadj=0;const cost=()=>'₹'+Math.max(.01,tk*.000143+cadj).toFixed(2),K=()=>.55*(S.pres?2:1),cfg=()=>Object.fromEntries(KEYS.map((k,i)=>[k,!!S.tg[i]])),custom=()=>!PRE[S.lv].every((v,i)=>v==S.tg[i]);
 const accP=c=>!c.tools?28:c.sensor?99.4:c.reflect?85:76,ctxP=c=>c.multi?(c.compact?22:88):c.compact?18:c.tools?38:6;
 function layout(c){const w=c.multi?'an':'a',f=c.multi?'syn':'a',E=[['u','a']];
 const n={u:['📥 Prompt',N],out:['📤 Output',N],a:[c.multi?'🎯 Orchestrator':c.tools?(c.reflect?'🧠 Generator':'🧠 LLM Agent'):'🧠 LLM',c.multi?C:B]};
@@ -158,11 +158,11 @@ function setN(id,s){const g=$('#n-'+id);if(!g)return;g.setAttribute('class','nod
 function setE(l){document.querySelectorAll('.edge').forEach(e=>e.setAttribute('class','edge'));(l||[]).forEach(([k,c])=>{const e=$('#e-'+k);if(e)e.setAttribute('class','edge '+c)})}
 function log(tag,msg,json,lv){const d=document.createElement('div');d.className='ll';d.innerHTML=`<span class="ts">[${simT.toFixed(2).padStart(5,'0')}s]</span> <span style="color:${TC[tag]||'#8B5CF6'}">[${tag}]</span> <span class="${lv||''}">${esc(msg)}</span>`+(json?`<details><summary>payload</summary><pre>${esc(JSON.stringify(json,null,2))}</pre></details>`:'');const T=$('#term');T.appendChild(d);T.scrollTop=T.scrollHeight}
 function setAcc(v){const f=acc,s=performance.now();acc=v;(function fr(n){const p=Math.min((n-s)/600,1),x=f+(v-f)*p;$('#k-acc').textContent=x.toFixed(1)+'%';const b=$('#k-accb');b.style.width=x+'%';b.style.background=v<50?'#EF4444':v<90?'#F59E0B':'#22C55E';if(p<1)requestAnimationFrame(fr)})(s)}
-function kv(c,t){c=c||cfg();$('#k-lat').textContent=(t??simT).toFixed(1)+'s';$('#k-cost').textContent='₹'+(tk*.000143).toFixed(2);const r=ctx>=80;
+function kv(c,t){c=c||cfg();$('#k-lat').textContent=(t??simT).toFixed(1)+'s';$('#k-cost').textContent=cost();const r=ctx>=80;
 $('#k-ctx').innerHTML=`<span style="color:${r?'#EF4444':'#22C55E'}">${r?'Context Rot Warning ('+ctx+'% full)':c.compact?'Compacted ('+ctx+'% utilized)':'Healthy ('+ctx+'% utilized)'}</span>`;
 const b=$('#k-ctxb');b.style.width=ctx+'%';b.style.background=r?'#EF4444':'#22C55E';
 }
-function kpiIdle(){const c=cfg();simT=0;tk=0;ctx=ctxP(c);setAcc(accP(c));kv(c);$('#k-lat').textContent='—';$('#k-cost').textContent='—'}
+function kpiIdle(){const c=cfg();simT=0;tk=0;ctx=ctxP(c);acc=0;kv(c);$('#k-acc').textContent='—';$('#k-accb').style.width='0%';$('#k-ctx').textContent='—';$('#k-ctxb').style.width='0%';$('#k-lat').textContent='—';$('#k-cost').textContent='—'}
 setInterval(()=>{if(S.running&&!S.paused)kv(null,simT+Math.min((performance.now()-t0)/(1000*K()),curDt))},80);
 const HC={bad:'hb',ok:'hg',warn:'hw'},R=a=>(a||[]).map(([t,k])=>k[0]=='b'?`<span class="bd bd-${k.slice(2)}">${esc(t)}</span>`:k?`<span class="${HC[k]}">${esc(t)}</span>`:esc(t)).join('');
 function renderOut(){const a=R(S.out)||'<span style="color:#64748b">Press “Run Simulation” to stream the agent’s final report.</span>';
@@ -177,7 +177,7 @@ for(const w of ws){S.out.push(w);renderOut();await sleep(rnd([15,22,30,38,45])*(
 const gate=()=>new Promise(r=>{gateRes=r}),showGate=v=>$('#gate').classList.toggle('show',v);
 function abort(){S.run++;if(gateRes){gateRes(null);gateRes=null}S.running=false;S.paused=false;showGate(false);$('#runb').disabled=false}
 function reset(){abort();$('#note').hidden=true;$('#term').innerHTML='';S.out=[];$('#pop').style.display='none';drawG();kpiIdle();renderOut();log('SYSTEM','Ready. Configure the stack, then press Run Simulation.')}
-async function run(){reset();const id=S.run,c=cfg(),w=c.multi?'an':'a',f=c.multi?'syn':'a',ag=c.multi?'ORCHESTRATOR':'LLM',V=Math.random()*3|0,stf=S.lv>=4;
+async function run(){reset();cadj=rnd([-.01,0,.01]);const id=S.run,c=cfg(),w=c.multi?'an':'a',f=c.multi?'syn':'a',ag=c.multi?'ORCHESTRATOR':'LLM',V=Math.random()*3|0,stf=S.lv>=4;
 S.running=true;$('#term').innerHTML='';S.l1=report({},{},Math.random()*3|0);let fix=false,sens=false,appr=null;
 try{
 await stp(id,.1,{n:{u:'done',a:'active'},e:[['u-a','on']],tk:60,ctx:6,l:['USER','Task received: analyze Q3 churn, compute revenue lost in ₹, run retention campaign.']});
@@ -213,7 +213,7 @@ else await stp(id,.1,{n:{[f]:'done'},e:[[f+'-out','on']]});
 await stp(id,.05,{n:{out:'active'}});
 await stream(id,report(c,{fix,sensor:sens,appr},V));
 setN('out',sens?'ok':'done');setE([]);$('#note').hidden=false;setAcc(!c.tools?28:sens?99.4:fix?93:76);S.running=false;kv();
-log('SYSTEM',`Run complete · ${simT.toFixed(1)}s · ${Math.round(tk)} tokens · ₹${(tk*.000143).toFixed(2)}`,null,'o')
+log('SYSTEM',`Run complete · ${simT.toFixed(1)}s · ${Math.round(tk)} tokens · ${cost()}`,null,'o')
 }catch(e){if(e!==0)console.error(e)}}
 const note=()=>{const c=cfg();let t=NOTES[S.lv];if(custom()){const m=[];if(!c.tools)m.push('no tools, so every number is invented');else{if(!c.sensor&&!c.reflect)m.push('no verification, so the NULL-row bug (42.0% instead of the true 48.5%) ships silently');if(!c.sensor&&c.reflect)m.push('self-critique alone misses the bug in about 30% of runs');if(c.multi&&!c.compact)m.push('multi-agent without a compactor causes context rot (88% full)');if(!c.hitl)m.push('no HITL gate, so the ₹12,00,000 spend is unbounded')}t='Custom hybrid: '+(m.join('; ')||'every safeguard is present — this is the Level 6 rig')+'.'}$('#notet').textContent=t};
 const LC=['#94a3b8','#3B82F6','#06B6D4','#10B981','#F59E0B','#8B5CF6'];
@@ -225,7 +225,7 @@ $('#back').onclick=()=>{$('#hero').hidden=false;abort();$('#lab').hidden=true;$(
 $('#runb').onclick=run;$('#rst').onclick=reset;
 $('#cmp').onclick=()=>{S.cmp=!S.cmp;S.l1=S.l1||report({},{},Math.random()*3|0);$('#cmp').textContent='Compare Side-by-Side with Level 1: '+(S.cmp?'ON':'OFF');$('#cmp').classList.toggle('act',S.cmp);renderOut()};
 $('#gok').onclick=()=>{if(gateRes){gateRes(true);gateRes=null}};$('#gno').onclick=()=>{if(gateRes){gateRes(false);gateRes=null}};
-$('#svg').onclick=e=>{const g=e.target.closest('.nw');if(!g)return;const[t,b]=INFO(g.dataset.id,cfg()),p=$('#pop');p.innerHTML=`<b style="color:#6d28d9">${esc(t)}</b><div style="margin-top:4px;color:#475569">${esc(b)}</div>`;p.style.display='block'};
+$('#svg').onclick=e=>{const g=e.target.closest('.nw'),p=$('#pop');if(!g){p.style.display='none';return}const[t,b]=INFO(g.dataset.id,cfg());p.innerHTML=`<b style="color:#6d28d9">${esc(t)}</b><div style="margin-top:4px;color:#475569">${esc(b)}</div>`;p.style.display='block';const r=g.getBoundingClientRect(),w=$('#sw').getBoundingClientRect(),pw=p.offsetWidth,ph=p.offsetHeight;let l=r.left-w.left+r.width/2-pw/2;l=Math.max(0,Math.min(l,w.width-pw));let y=r.bottom-w.top+8;if(y+ph>w.height)y=Math.max(0,r.top-w.top-ph-8);p.style.left=l+'px';p.style.top=y+'px'};
 $('#pop').onclick=()=>{$('#pop').style.display='none'};
 S.l1=report({},{},0);
 let lp=PT();addEventListener("resize",()=>{if(lp!==PT()){lp=PT();if(!S.running&&!$("#lab").hidden)reset()}});</script></body></html>
